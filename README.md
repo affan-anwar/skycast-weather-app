@@ -1,16 +1,209 @@
-# React + Vite
+# SkyCast Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+SkyCast is a responsive weather application built with React, Vite, Tailwind CSS, Open-Meteo API, and OpenStreetMap Nominatim API.
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+Users can search for current weather using a city, village, address, or PIN code.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+## Features
+
+
+
+- Search weather by city name
+
+- Search weather by village or address
+
+- Search weather using PIN code
+
+- Display current temperature
+
+- Display feels-like temperature
+
+- Display humidity
+
+- Display wind speed
+
+- Display weather condition and icon
+
+- Loading state while fetching data
+
+- Error message for invalid locations
+
+- Responsive design for mobile, tablet, and desktop
+
+
+
+## Technologies Used
+
+
+
+- React.js
+
+- JavaScript
+
+- Vite
+
+- Tailwind CSS
+
+- Fetch API
+
+- Open-Meteo API
+
+- OpenStreetMap Nominatim API
+
+- HTML5
+
+- CSS3
+
+
+
+## Project Structure
+
+
+
+```text
+
+skycast-weather-app/
+
+├── public/
+
+├── src/
+
+│   ├── components/
+
+│   │   ├── SearchBar.jsx
+
+│   │   └── WeatherCard.jsx
+
+│   ├── services/
+
+│   │   └── weatherApi.js
+
+│   ├── App.jsx
+
+│   ├── index.css
+
+│   └── main.jsx
+
+├── index.html
+
+├── package.json
+
+└── vite.config.js
+
+```
+
+
+
+## Installation
+
+
+
+Clone the repository:
+
+
+
+```bash
+
+git clone https://github.com/affan-anwar/skycast-weather-app.git
+
+```
+
+
+
+Open the project folder:
+
+
+
+```bash
+
+cd skycast-weather-app
+
+```
+
+
+
+Install dependencies:
+
+
+
+```bash
+
+npm install
+
+```
+
+
+
+Run the development server:
+
+
+
+```bash
+
+npm run dev
+
+```
+
+
+
+Open the application:
+
+
+
+```text
+
+http://localhost:5173
+
+```
+
+## Search Examples
+
+
+
+```text
+
+Bengaluru
+
+London
+
+Dubai
+
+```
+
+
+
+## APIs Used
+
+
+
+- Open-Meteo API for current weather information
+
+- Open-Meteo Geocoding API for city search
+
+- OpenStreetMap Nominatim API for address and PIN-code search
+
+
+
+## Author
+
+
+
+**MD AFFAN ANWAR**
+
+
+
+GitHub: [affan-anwar](https://github.com/affan-anwar)
+
+
+
+## Repository
+
+
+
+[SkyCast Weather App](https://github.com/affan-anwar/skycast-weather-app)
