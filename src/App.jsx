@@ -3,68 +3,100 @@ import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 import { getWeatherByCity } from "./services/weatherApi";
 
+function getWeatherCondition(code) {
+  if (code === 0) {
+    return "Clear Sky";
+  }
+
+  if (code >= 1 && code <= 3) {
+    return "Partly Cloudy";
+  }
+
+  if (code === 45 || code === 48) {
+    return "Foggy";
+  }
+
+  if (code >= 51 && code <= 57) {
+    return "Drizzle";
+  }
+
+  if (code >= 61 && code <= 67) {
+    return "Rainy";
+  }
+
+  if (code >= 71 && code <= 77) {
+    return "Snowy";
+  }
+
+  if (code >= 80 && code <= 82) {
+    return "Rain Showers";
+  }
+
+  if (code >= 95 && code <= 99) {
+    return "Thunderstorm";
+  }
+
+  return "Unknown Weather";
+}
+
+async function fetchWeather(cityName) {
+  const weatherData = await getWeatherByCity(cityName);
+
+  return {
+    ...weatherData,
+    condition: getWeatherCondition(weatherData.weatherCode),
+  };
+}
+
 function App() {
   const [weather, setWeather] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  function getWeatherCondition(code) {
-    if (code === 0) {
-      return "Clear Sky";
-    }
-
-    if (code === 1 || code === 2 || code === 3) {
-      return "Partly Cloudy";
-    }
-
-    if (code === 45 || code === 48) {
-      return "Foggy";
-    }
-
-    if (code >= 51 && code <= 57) {
-      return "Drizzle";
-    }
-
-    if (code >= 61 && code <= 67) {
-      return "Rainy";
-    }
-
-    if (code >= 71 && code <= 77) {
-      return "Snowy";
-    }
-
-    if (code >= 80 && code <= 82) {
-      return "Rain Showers";
-    }
-
-    if (code >= 95 && code <= 99) {
-      return "Thunderstorm";
-    }
-
-    return "Unknown Weather";
-  }
 
   async function handleSearch(cityName) {
     try {
       setLoading(true);
       setError("");
 
-      const weatherData = await getWeatherByCity(cityName);
+      const weatherData = await fetchWeather(cityName);
 
-      setWeather({
-        ...weatherData,
-        condition: getWeatherCondition(weatherData.weatherCode),
-      });
-    } catch (error) {
+      setWeather(weatherData);
+    } catch (caughtError) {
       setWeather(null);
-      setError(error.message);
+      setError(caughtError.message);
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    handleSearch("Bengaluru");
+    let isCancelled = false;
+
+    async function loadDefaultWeather() {
+      try {
+        const weatherData = await fetchWeather("Bengaluru");
+
+        if (!isCancelled) {
+          setWeather(weatherData);
+          setError("");
+        }
+      } catch (caughtError) {
+        if (!isCancelled) {
+          setWeather(null);
+          setError(caughtError.message);
+        }
+      } finally {
+        if (!isCancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadDefaultWeather();
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   return (
@@ -75,9 +107,7 @@ function App() {
             Weather Forecast
           </p>
 
-          <h1 className="text-4xl font-bold sm:text-5xl">
-            SkyCast
-          </h1>
+          <h1 className="text-4xl font-bold sm:text-5xl">SkyCast</h1>
 
           <p className="mx-auto mt-4 max-w-xl text-blue-100">
             Search any city and check its current weather conditions.
